@@ -1,8 +1,5 @@
 <?php
-
 use system\startup;
-
-
 
 spl_autoload_register(function ($class_name) {
     $filename = str_replace('\\', '/', $class_name . '.php');
@@ -16,7 +13,6 @@ spl_autoload_register(function ($class_name) {
 set_include_path(__DIR__ . "/application/interfaces");
 spl_autoload_extensions('.php');
 spl_autoload_register();
-
 
 startup::application_start();
 startup::begin_request();

@@ -1,24 +1,24 @@
 <?php
-
 namespace system\routing;
 
 /**
  * This class represent a route
  */
-class Route{
+class Route
+{
 
-	/**
-	 * Controller Name
-	 */
-	public $controller;
+    /**
+     * Controller Name
+     */
+    public $controller;
 
-	/**
-	 * Action Name
-	 */
-	public $action;
+    /**
+     * Action Name
+     */
+    public $action;
 
-	/**
-	 * List of Arguments
-	 */
-	public $args = array();
+    /**
+     * List of Arguments
+     */
+    public $args = array();
 }
