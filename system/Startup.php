@@ -57,5 +57,5 @@ class Startup
     }
 
     public static function End_Request()
-    {}
+    { }
 }

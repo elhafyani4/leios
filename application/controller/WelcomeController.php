@@ -1,6 +1,7 @@
 <?php
 namespace application\controller;
 
+use system\controller\ApiBaseController;
 use system\controller\BaseController;
 use application\repositories\ISampleService;
 

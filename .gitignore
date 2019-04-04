@@ -3,3 +3,4 @@
 .settings/org.eclipse.php.core.prefs
 .project
 .buildpath
+/node_modules

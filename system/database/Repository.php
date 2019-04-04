@@ -37,5 +37,4 @@ class Repository implements IRepository
 }
 
 interface IRepository
-{
-}
+{ }
