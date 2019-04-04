@@ -1,9 +1,15 @@
 <html>
 <head>
 <title>Ngglo Framework</title>
+
 </head>
 <body>
-	<h1>Ngglo Framework , it worked !!! <?php echo $application_name;?></h1>
+<div id="app"></div>
 </body>
+<script type="text/javascript" src="/application/static/dist/build.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
 </html>
 

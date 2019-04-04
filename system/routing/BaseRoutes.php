@@ -35,7 +35,7 @@ abstract class BaseRoutes
         return $route;
     }
 
-    static function register_route($route_name, $controller, $action = NULL, $args = array())
+    static function register_route($route_name, $controller, $action = null, $args = array())
     {
         $route = new route();
         $route->action = $action;

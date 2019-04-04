@@ -11,7 +11,7 @@ abstract class BaseController
         $this->controllerName = self::get_controller_name(get_class($object));
     }
 
-    protected function view($viewName = null, $data = NULL)
+    protected function view($viewName = null, $data = null)
     {
         $numargs = func_num_args();
         if ($numargs == 1) {
@@ -29,11 +29,11 @@ abstract class BaseController
             $data = func_get_arg(1);
         }
 
-        if ($viewName == NULL) {
+        if ($viewName == null) {
             $viewName = $this->get_calling_function();
         }
 
-        if ($data != NULL) {
+        if ($data != null) {
             if (is_array($data)) {
                 extract($data);
             } else {
