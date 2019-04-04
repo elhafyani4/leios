@@ -1,68 +1,94 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import withMobileDialog from '@material-ui/core/withMobileDialog';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import Drawer from './drawer';
 
-class ResponsiveDialog extends React.Component {
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+};
+
+class ButtonAppBar extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      open: false,
-    }
+    this.childRef = React.createRef();
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
+  onClick = () => {
+    this.childRef.current.toggleDrawer();
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
 
-  
-
-  render() {
-    const { fullScreen } = this.props;
-
+  render(){
     return (
-      <div>
-        <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
-          Open responsive dialog
-        </Button>
-        <Dialog
-          fullScreen={fullScreen}
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="responsive-dialog-title"
-        >
-          <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
+      <div className={this.props.classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton onClick={this.onClick} className={this.props.classes.menuButton}color="inherit" aria-label="Menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={this.props.classes.grow}>
+              News
+            </Typography>
+            <Button color="inherit">Login</Button>
+          </Toolbar>
+          <Drawer ref={this.childRef}/>
+        </AppBar>
       </div>
     );
   }
-}
 
-ResponsiveDialog.propTypes = {
-  fullScreen: PropTypes.bool.isRequired,
+} 
+
+
+ButtonAppBar.propTypes = {
+  classes: PropTypes.object.isRequired,
 };
 
-export default withMobileDialog()(ResponsiveDialog);
+export default withStyles(styles)(ButtonAppBar);
+
+
+
+// import React from 'react';
+// import PropTypes from 'prop-types';
+
+// class App extends React.Component{
+//  constructor(options){
+//    super(options);
+   
+//    this.state = {
+//     currentTime: (new Date()).toISOString()
+//    }
+//  }
+
+// launchClock = () => {
+//   setInterval(() => {
+//     console.log("hello world");
+//     this.setState({
+//       currentTime: (new Date()).toISOString()
+//     })
+//   }, 10)
+// }
+
+//  render(){
+//    return (<div>
+//       {this.state.currentTime}
+//     </div>)
+//  }
+// }
+
+// export default App;

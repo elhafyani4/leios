@@ -1,9 +1,14 @@
 <html>
 <head>
 <title>Ngglo Framework</title>
-
+<style>
+    body{
+        margin:0;
+    }
+</style>
 </head>
 <body>
+
 <div id="app"></div>
 </body>
 <script type="text/javascript" src="/application/static/dist/build.js"></script>
