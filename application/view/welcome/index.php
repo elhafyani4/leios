@@ -1,7 +1,11 @@
 <html>
 <head>
 <title>Ngglo Framework</title>
-
+<style>
+    body{
+        margin:0;
+    }
+</style>
 </head>
 <body>
 <div id="app"></div>
