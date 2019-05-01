@@ -1,5 +1,6 @@
 var path    = require('path');
 var hwp     = require('html-webpack-plugin');
+var webpack = require('webpack');
 
 module.exports = {
     watch: true,
@@ -19,12 +20,17 @@ module.exports = {
             test: /\.js$/,
             loader: 'babel-loader',
             query: {
-                presets: ['react'],
+                presets: ['react', 'es6'],
                 plugins: ['transform-class-properties']
             }
         }]
     },
     plugins:[
-        new hwp({template:path.join(__dirname, '/src/index.html')})
+        new hwp({template:path.join(__dirname, '/src/index.html')}),
+        new webpack.DefinePlugin({
+            "process.env": { 
+               NODE_ENV: JSON.stringify("development") 
+             }
+          })
     ]
 }

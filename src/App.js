@@ -8,6 +8,9 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from './drawer';
+import { connect, Provider } from 'react-redux';
+import {openDrawer, closeDrawer} from './redux/actions';
+
 
 const styles = {
   root: {
@@ -25,28 +28,26 @@ const styles = {
 class ButtonAppBar extends React.Component{
   constructor(props){
     super(props);
-    this.childRef = React.createRef();
   }
 
-  onClick = () => {
-    this.childRef.current.toggleDrawer();
-  };
+  
 
 
   render(){
     return (
       <div className={this.props.classes.root}>
         <AppBar position="static">
+        
           <Toolbar>
-            <IconButton onClick={this.onClick} className={this.props.classes.menuButton}color="inherit" aria-label="Menu">
+            <IconButton onClick={this.props.openDrawer} className={this.props.classes.menuButton}color="inherit" aria-label="Menu">
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" className={this.props.classes.grow}>
-              News
+                News
             </Typography>
             <Button color="inherit">Login</Button>
           </Toolbar>
-          <Drawer ref={this.childRef}/>
+          <Drawer />
         </AppBar>
       </div>
     );
@@ -59,7 +60,15 @@ ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonAppBar);
+const mapStateToProps = state => ({
+  ...state
+});
+const mapDispatchToProps = dispatch => ({
+  startAction: () => dispatch(startAction),
+  stopAction: () => dispatch(stopAction)
+});
+
+export default connect((mapStateToProps, mapDispatchToProps))(withStyles(styles)(ButtonAppBar));
 
 
 
