@@ -1,23 +1,49 @@
 <?php
 
-$master = array();
-$socket = stream_socket_server("tcp://0.0.0.0:8000", $errno, $errstr);
-if (!$socket) {
+error_reporting(E_ALL);
+set_time_limit(0);
+ob_implicit_flush();
+
+
+GLOBAL $clients;
+GLOBAL $client_list;
+
+$logger = new logger();
+
+$sockets = array();
+$master = stream_socket_server("tcp://0.0.0.0:8000", $errno, $errstr);
+
+if (!$master) {
   echo "$errstr ($errno)<br />\n";
 } else {
-  $master[] = $socket;
-  $read = $master;
+  $sockets[] = $master;
+  $read = $sockets;
+
   while (1) {
-    $read = $master;
+    $read = $sockets;
     $mod_fd = @stream_select($read, $_w = null, $_e = null, 5);
     if ($mod_fd === false) {
       break;
     }
+
     for ($i = 0; $i < $mod_fd; ++$i) {
-      if ($read[$i] === $socket) {
-        $conn = stream_socket_accept($socket);
-        fwrite($conn, "Hello! The time is " . date("n/j/Y g:i a") . "\n");
-        $master[] = $conn;
+      if ($read[$i] === $master) {
+        $client = stream_socket_accept($master);
+        if ($client < 0) {
+          $logger->info("stream_socket_accept");
+        } else { 
+          $logger->info("connecting socket", $client);
+
+          GLOBAL $clients;
+          GLOBAL $client_list;
+          $clients[$socket]["id"] = uniqid();
+          $clients[$socket]["socket"] = $socket;
+          $clients[$socket]["handshake"] = false;
+          $logger->info("Accepted client \n\n");
+
+          $client_list[$socket] = $client;
+
+        }
       } else {
         $sock_data = @fread($read[$i], 1024);
         var_dump($sock_data);
@@ -38,5 +64,35 @@ if (!$socket) {
         }
       }
     }
+  }
+}
+
+
+public function accept_client(){
+  
+}
+
+
+class logger
+{
+
+  private $fileName = "log.text";
+
+  private $handle = null;
+
+  public function __construct()
+  {
+    $this->handle = fopen($this->fileName, 'a');
+  }
+
+  public function info($message, ...$args)
+  {
+    $message = sprintf($message, $args);
+    fwrite($this->handle, $message);
+  }
+
+  public function __destruct()
+  {
+    fclose($this->handle);
   }
 }
