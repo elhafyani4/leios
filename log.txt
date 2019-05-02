@@ -1,0 +1,28 @@
+Server started on 127.0.0.1 : 1222
+
+Master Socket Changed.
+
+Connecting socket.
+
+4Accepted client 
+
+4
+handshakingServer started on 127.0.0.1 : 1222
+
+Master Socket Changed.
+
+Connecting socket.
+
+4Accepted client 
+
+4
+handshakingServer started on 127.0.0.1 : 1222
+
+Master Socket Changed.
+
+Connecting socket.
+
+4Accepted client 
+
+4
+handshaking
