@@ -3,7 +3,8 @@ namespace application\configuration;
 
 use application\repositories\ISampleService;
 use application\repositories\SampleService;
-use system\Container;
+use system\logging\FileLogger;
+use system\logging\LoggerInterface;
 
 class config
 {
@@ -19,8 +20,10 @@ class config
         // "\/help\/(.*)\/(.*)" => "Welcome/getHelp"
     );
 
-    public static function register_classes()
+    
+    public static function register_classes(&$container)
     {
-        Container::add_to_registry(ISampleService::class, new SampleService());
+        $container->add(ISampleService::class, new SampleService());
+        $container->add(LoggerInterface::class, new FileLogger(__DIR__."\..\..\logging\logger.log"));
     }
 }

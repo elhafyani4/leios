@@ -2,7 +2,6 @@
 
 namespace system\controller;
 
-use http\Exception;
 
 /***
  * Class ApiBaseController
@@ -14,7 +13,7 @@ abstract class ApiBaseController extends BaseController
 
   /***
    * @param $data
-   * @return json string
+   * @return  string
    */
   protected function json($data)
   {

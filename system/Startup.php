@@ -1,30 +1,41 @@
 <?php
 namespace system;
 
-use system\routing\Routes;
+use system\routing\Routing;
+use system\container\Container;
 
-class Startup
+class startup
 {
 
-    private static function define_variables()
-    {
+    private $container;
+    private $routing;
+
+    public function __construct(){
         define("VIEW_PATH", dirname(__DIR__) . '/application/view');
         define("CONTROLLER_LOCATION", "application\\controller\\");
     }
 
-    public static function application_start()
+    public function application_start()
     {
-        self::define_variables();
-        Container::register_classes();
-        Routes::register_routes();
+        $this->container = new Container();
+        $this->routing = new Routing();
+        
+        
+        $this->container->registerClasses();
+        $this->routing->registerRoutes();
     }
 
-    public static function begin_request()
+    public function beginRequest()
     {
         $request_uri = $_SERVER["REQUEST_URI"];
-        $route = Routes::resolve_route($request_uri);
-        $className = CONTROLLER_LOCATION . $route->controller . 'Controller';
-        $methodName = $route->action;
+        if($this->routing->resolveRoute($request_uri, $route) === false){
+            $className = "system\controller\NotFoundController";
+            $methodName = "index";
+            $arguments = array();
+        }else{
+            $className = CONTROLLER_LOCATION . $route->controller . 'Controller';
+            $methodName = $route->action;
+        }
 
         $class = new \ReflectionClass($className);
         $parameters = $class->getConstructor()->getParameters();
@@ -41,7 +52,7 @@ class Startup
 
         $args = array();
         foreach ($injectable_objects as $injectable_object) {
-            array_push($args, container::GetInstance($injectable_object[1]));
+            array_push($args, $this->container->get($injectable_object[1]));
         }
 
         if (count($args) == 0)
@@ -53,9 +64,11 @@ class Startup
         call_user_func_array(array(
             $object,
             $methodName
-        ), $route->args);
+        ),  $arguments ?? $route->args);
     }
 
-    public static function End_Request()
-    { }
+    public function endRequest()
+    { 
+        
+    }
 }

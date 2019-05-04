@@ -1,0 +1,29 @@
+hello worldhello worldhello worldhello world
+hello world
+2019-05-04 00:39:37 : emergency : hello world
+[2019-05-04 00:40:37 069]:emergency : hello world
+[2019-05-04 00:40:48 070]:emergency : hello world
+[2019-05-04 00:40:50 070]:emergency : hello world
+[2019-05-04 00:40:51 070]:emergency : hello world
+[2019-05-04 00:40:52 070]:emergency : hello world
+[2019-05-04 00:40:52 070]:emergency : hello world
+[2019-05-04 00:40:54 070]:emergency : hello world
+[2019-05-04 00:40:55 070]:emergency : hello world
+[2019-05-04 00:42:52 071]:emergency : hello world
+[2019-05-04 00:42:54 071]:emergency : hello world
+[2019-05-04 00:42:55 071]:emergency : hello world
+[2019-05-04 00:42:56 071]:emergency : hello world
+[2019-05-04 00:42:56 071]:emergency : hello world
+[2019-05-04 00:42:56 071]:emergency : hello world
+[2019-05-04 00:48:14 075]:emergency : hello world
+[2019-05-04 00:50:53 077]:debug : hello world
+[2019-05-04 00:52:33 078]:debug : hello world
+[2019-05-04 00:56:30 080]:debug : hello world
+[2019-05-04 00:56:30 080]:debug : destructing
+[2019-05-04 01:47:31 116]:debug : hello world
+[2019-05-04 01:51:47 119]:debug : hello world
+[2019-05-04 01:53:51 120]:debug : hello world
+[2019-05-04 02:17:08 136]:debug : hello world
+[2019-05-04 02:17:37 137]:debug : hello world
+[2019-05-04 02:17:38 137]:debug : hello world
+[2019-05-04 02:17:49 137]:debug : hello world

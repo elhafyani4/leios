@@ -8,8 +8,8 @@ if(php_sapi_name()==="cli"){
   die();
 }
 
-
-startup::application_start();
-startup::begin_request();
+$startup = new startup();
+$startup->application_start();
+$startup->begin_request();
 
 

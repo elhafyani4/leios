@@ -6,9 +6,11 @@ abstract class BaseController
 
     public $controllerName = "";
 
-    public function __construct($object)
+    public function __construct($object = null)
     {
-        $this->controllerName = self::get_controller_name(get_class($object));
+        if($object != null){
+            $this->controllerName = self::get_controller_name(get_class($object));
+        }
     }
 
     protected function view($viewName = null, $data = null)
