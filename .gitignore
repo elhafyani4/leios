@@ -4,3 +4,4 @@
 .project
 .buildpath
 /node_modules
+vendor
