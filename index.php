@@ -9,7 +9,8 @@ if(php_sapi_name()==="cli"){
 }
 
 $startup = new startup();
-$startup->application_start();
-$startup->begin_request();
+$startup->applicationStart();
+$startup->configureMiddleware();
+$startup->beginRequest();
 
 
