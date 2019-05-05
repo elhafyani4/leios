@@ -4,8 +4,6 @@
 .project
 .buildpath
 /node_modules
-<<<<<<< HEAD
 vendor
-=======
 /logging
->>>>>>> add request context and middleware
+
