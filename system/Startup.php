@@ -29,10 +29,22 @@ class startup
      */
     private $middleWares;
 
+    private static $instance = null;
+    /**
+     * get instance
+     */
+    public static function getInstance(){
+        if(self::$instance == null){
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
     /**
      * constructor
      */
-    public function __construct(){
+    private function __construct(){
         define("VIEW_PATH", dirname(__DIR__) . '/application/view');
         define("CONTROLLER_LOCATION", "application\\controller\\");
 
@@ -41,12 +53,19 @@ class startup
         $this->middleWares = array();
     }
 
-    public function configureMiddleware(){
+    /**
+     * configure Middleware that is going to run
+     */
+    public function configure(){
         $this->useMiddleWare(new RequestHandler());
         $this->useMiddleWare(new SampleHandler());
+        return $this;
     }
 
-    public function applicationStart()
+    /**
+     * application start
+     */
+    public function initialize()
     {
         $this->container->registerClasses();
         $this->routing->registerRoutes();
@@ -55,9 +74,13 @@ class startup
         $this->requestContext->container = $this->container;
         $this->requestContext->routing = $this->routing;
 
+        return $this;
     }
 
-    public function beginRequest()
+    /**
+     * start processing the request
+     */
+    public function process()
     {
        $response = "";
        foreach($this->middleWares as $middleWare){
