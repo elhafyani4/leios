@@ -8,6 +8,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from './drawer';
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
+
+
 
 const styles = {
   root: {
@@ -20,7 +24,15 @@ const styles = {
     marginLeft: -12,
     marginRight: 20,
   },
+  fab: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+  },
+ 
 };
+
+
 
 class ButtonAppBar extends React.Component{
   constructor(props){
@@ -32,6 +44,8 @@ class ButtonAppBar extends React.Component{
     this.childRef.current.toggleDrawer();
   };
 
+
+ 
 
   render(){
     return (
@@ -46,7 +60,12 @@ class ButtonAppBar extends React.Component{
             </Typography>
             <Button color="inherit">Login</Button>
           </Toolbar>
+       
+
           <Drawer ref={this.childRef}/>
+          <Fab className={this.props.classes.fab} color="secondary">
+              <EditIcon />
+            </Fab>  
         </AppBar>
       </div>
     );

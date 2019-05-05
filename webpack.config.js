@@ -18,10 +18,6 @@ module.exports = {
             exclude: /node_modules/,
             test: /\.js$/,
             loader: 'babel-loader',
-            query: {
-                presets: ['react'],
-                plugins: ['transform-class-properties']
-            }
         }]
     },
     plugins:[

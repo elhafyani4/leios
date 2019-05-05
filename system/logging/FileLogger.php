@@ -14,7 +14,8 @@ class FileLogger implements LoggerInterface{
      * constuctor for the File Logger
      */
     public function __construct(string $fileName) {
-        $this->fileHandler = fopen($fileName, 'a');
+        
+        $this->fileHandler = fopen($fileName.date("Y_d_m"), 'a');
     }
 
      /**

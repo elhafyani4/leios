@@ -3,13 +3,10 @@ use system\startup;
 
 include_once("./system/autoload.php");
 
-if(php_sapi_name()==="cli"){
-  echo "CLI Application";
-  die();
-}
+//this will bootstrap the application configure middleware and any other configuration
+// initialize some data and process the request
+startup::getInstance()->configure()->initialize()->process();
 
-$startup = new startup();
-$startup->application_start();
-$startup->begin_request();
+
 
 
