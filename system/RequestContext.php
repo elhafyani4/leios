@@ -12,4 +12,6 @@ class RequestContext{
     public $header;
 
     public $get;
+
+    public $response;
 }

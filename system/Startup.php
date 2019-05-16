@@ -84,7 +84,7 @@ class startup
     {
        $response = "";
        foreach($this->middleWares as $middleWare){
-           $response .= $middleWare->handle($this->requestContext);
+           $middleWare->handle($this->requestContext, $response);
        }
        echo $response;
     }

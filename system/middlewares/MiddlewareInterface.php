@@ -2,5 +2,5 @@
 namespace system\middlewares;
 
 interface MiddlewareInterface{
-    public function handle($requestContext);
+    public function handle($requestContext, &$response);
 }

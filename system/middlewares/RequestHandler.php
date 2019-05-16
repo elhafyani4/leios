@@ -4,7 +4,8 @@ namespace system\middlewares;
 
 class RequestHandler implements MiddlewareInterface {
 
-    public function handle($requestContext){
+    public function handle($requestContext, &$response ){
+        ob_start();
         $request_uri = $_SERVER["REQUEST_URI"];
         if($requestContext->routing->resolveRoute($request_uri, $route) === false){
             $className = "system\controller\NotFoundController";
@@ -43,8 +44,8 @@ class RequestHandler implements MiddlewareInterface {
             $object,
             $methodName
         ),  $arguments ?? $route->args);
-        $response = ob_get_flush();
-        return $response;
-    }
 
+        $out = ob_get_clean();
+        $response = $out;    
+    }
 }

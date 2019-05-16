@@ -5,5 +5,5 @@
 .buildpath
 /node_modules
 vendor
-/logging
+/logging/*
 
