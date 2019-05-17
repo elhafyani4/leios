@@ -4,7 +4,7 @@ namespace application\configuration;
 use application\repositories\ISampleService;
 use application\repositories\SampleService;
 use system\logging\FileLogger;
-use system\logging\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 class config
 {
