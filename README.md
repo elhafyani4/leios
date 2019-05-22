@@ -156,7 +156,7 @@ class SampleController extends BaseController{
 ```
  
 ### Middleware
-the request in leios go through a middleware pipeline , currently , RequestHander is a middleware in the middleware pipeline
+the request in leios go through a middleware pipeline , currently , RequestHander (MVC) is a middleware in the middleware pipeline
 ```
 Request------------>AuthorizeMiddleware--------------->RequestHandler(MVC)--------------->SampleMiddleware--
                                                                                                             |
@@ -164,3 +164,81 @@ Request------------>AuthorizeMiddleware--------------->RequestHandler(MVC)------
                                                                                                             |
                                                                                                             |
 Response<------------AuthorizeMiddleware<---------------RequestHandler(MVC)<--------------SampleMiddleware<-
+```
+
+To create a middleware you need to extend the BaseMiddleware, let's take the example of the AuthorizeMiddleware and SampleMiddleware
+
+AuthorizeMiddleware.php
+```php
+<?php
+
+namespace system\middlewares;
+
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+class AuthorizeMiddleware extends BaseMiddleware
+{
+    public function handle(ServerRequestInterface $requestContext): ResponseInterface
+    {
+        if ($this->check_if_authorized($requestContext)) {
+            echo "not authorized";
+            exit();
+        }
+
+        $response = $this->invokeNext($requestContext);
+
+        return $response;
+    }
+
+    private function check_if_authorized($requestContext)
+    {
+        $request_uri = $_SERVER["REQUEST_URI"];
+        $route = null;
+        if ($requestContext->routing->resolveRoute($request_uri, $route) === true) {
+            $className = CONTROLLER_LOCATION . $route->controller . 'Controller';
+        }
+
+        $class = new \ReflectionClass($className);
+        $classDocumentation = $class->getDocComment();
+
+        if (strpos($classDocumentation, '@authorize') > -1) {
+            if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] == false) {
+                return false;
+            }
+        }
+    }
+}
+
+```
+
+SampleMiddleware.php
+```php
+<?php
+
+namespace system\middlewares;
+
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+class SampleHandler extends BaseMiddleware
+{
+    public function handle(ServerRequestInterface $requestContext): ResponseInterface
+    {
+
+        $response = $this->invokeNext($requestContext);
+        $contentLength =  strlen($response->messageBody);
+
+        $message = "
+                        <br /> <br /> 
+                        <div class='container'>
+                            <div class='alert alert-primary' role='alert'>
+                                Content Length {$contentLength} characters
+                            </div>
+                        </div>";
+
+        $response->messageBody .=  $message;
+        return $response;
+    }
+}
+```
