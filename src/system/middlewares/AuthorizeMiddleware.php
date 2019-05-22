@@ -10,8 +10,8 @@ class AuthorizeMiddleware extends BaseMiddleware
     public function handle(ServerRequestInterface $requestContext): ResponseInterface
     {
 
-        if ($this->check_if_authorized($requestContext)) {
-            echo "not authorized";
+        if (!$this->check_if_authorized($requestContext)) {
+            echo "403 Not Authorized";
             exit();
         }
 
@@ -31,10 +31,13 @@ class AuthorizeMiddleware extends BaseMiddleware
         $class = new \ReflectionClass($className);
         $classDocumentation = $class->getDocComment();
 
+
         if (strpos($classDocumentation, '@authorize') > -1) {
             if (!isset($_SESSION["logged_in"]) || $_SESSION["logged_in"] == false) {
                 return false;
             }
         }
+        
+        return true;
     }
 }

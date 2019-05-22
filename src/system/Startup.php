@@ -58,10 +58,9 @@ class startup
      * configure Middleware that is going to run
      */
     public function configure(){
-        $this->useMiddleWare(new AuthorizeMiddleware());
-        
-        $this->useMiddleWare(new SampleHandler());
-        $this->useMiddleWare(new RequestHandler());
+        $this->useMiddleWare(AuthorizeMiddleware::class);
+        $this->useMiddleWare(SampleHandler::class);
+        $this->useMiddleWare(RequestHandler::class);
         return $this;
     }
 
@@ -98,6 +97,6 @@ class startup
     }
 
     private function useMiddleWare($middleware ){
-        array_push($this->middleWares, $middleware);
+        array_push($this->middleWares, new $middleware());
     }
 }
