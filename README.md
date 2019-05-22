@@ -158,9 +158,9 @@ class SampleController extends BaseController{
 ### Middleware
 the request in leios go through a middleware pipeline , currently , RequestHander is a middleware in the middleware pipeline
 ```
-Request------------>AuthorizeMiddleware--------------->RequestHandler(MVC)----------------->SampleMiddleware---
-                                                                                                              |
-                                                                                                              |
-                                                                                                              |
-                                                                                                              |
-Response<------------AuthorizeMiddleware<---------------RequestHandler(MVC)<-----------------SampleMiddleware<---
+Request------------>AuthorizeMiddleware--------------->RequestHandler(MVC)--------------->SampleMiddleware--
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+                                                                                                            |
+Response<------------AuthorizeMiddleware<---------------RequestHandler(MVC)<--------------SampleMiddleware<-
