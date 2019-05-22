@@ -249,9 +249,9 @@ In order to attach this middleware to the pipeline we need to configure  this in
     .
     .
     public function configure(){
-        $this->useMiddleWare(new AuthorizeMiddleware());
-        $this->useMiddleWare(new SampleHandler());
-        $this->useMiddleWare(new RequestHandler());
+        $this->useMiddleWare(AuthorizeMiddleware::class);
+        $this->useMiddleWare(SampleHandler::class);
+        $this->useMiddleWare(RequestHandler::class);
         return $this;
     }
     
