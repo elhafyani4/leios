@@ -24,6 +24,58 @@ Routing
 
 Dependency Injection
 
-Middlewares
+Middlewares PSR-15
 
-that's all you need to start writing your application
+
+### How to get started?
+## Create Controller & View
+
+```php
+namespace application\controller;
+
+use system\controller\BaseController;
+
+class SampleController extends BaseController {
+
+    public function __construct() {
+
+    }
+
+    public function index() {
+        return $this->view();
+    }
+}
+```
+
+after creating controller with a function named index, go 
+`
+src\application\controller
+`
+and create a folder for that controller actions, and create a file that match the action name , in this case index.php
+
+`
+src\application\controller\sample\index.php
+`
+
+```html
+<html>
+  <head>
+    <title>Welcome to Leios</title>
+  </head>
+  <body>
+    Hello from Leios Framework
+  </body>
+</html>
+```
+
+to access this action go to http://localhost/sample/index
+
+if you dont like the way the url looks, you can use routing to access this action , go to the /src/application/configuration/config.php
+, edit the section $routes to something like this.
+
+```php
+static $routes = array(
+        "/sample" => "Sample/index"        
+    );
+```
+
