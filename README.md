@@ -79,3 +79,79 @@ static $routes = array(
     );
 ```
 
+now you can go to the http://localhost/sample and it would render the same action as before
+
+
+## Dependency Injection 
+
+the dependency injection currently works only with controller, all the services that you pass in the controller constructor would be provided from the container 
+
+### How to setup dependency injection 
+lets create a sample service ore repository 
+
+ISampleService.php
+```php
+<?php
+namespace application\repositories;
+
+interface ISampleService
+{
+    function get_sample_record();
+}
+```
+
+then let's create an implementation of that interface
+
+SampleService.php
+```php
+<?php
+namespace application\repositories;
+
+class SampleService implements ISampleService
+{
+    public function get_sample_record()
+    {
+        return array(
+            "application_name" => "Leios Framework"
+        );
+    }
+    
+}
+```
+
+now let's register instance of this class in the src/application/configuration/config.php
+
+```php
+public static function register_classes(&$container)
+{
+    $container->add(ISampleService::class, new SampleService());
+}
+ ```
+ 
+create controller 
+```php
+<?php
+
+namespace application\controller;
+
+use system\controller\BaseController;
+use application\repositories\ISampleService;
+use Psr\Log\LoggerInterface;
+
+class SampleController extends BaseController{
+
+    private  $service;
+
+    private $logger;
+
+    public function __construct(ISampleService $sampleService, LoggerInterface $logger){
+        $this->service = $sampleService;
+        $this->logger = $logger;
+    }
+
+    public function index(){
+        return $this->view();
+    }
+}
+```
+ 
