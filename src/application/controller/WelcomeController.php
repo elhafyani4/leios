@@ -1,15 +1,15 @@
 <?php
 namespace application\controller;
 
-use system\controller\ApiBaseController;
+
 use system\controller\BaseController;
 use application\repositories\ISampleService;
-use system\logging\LoggerInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  *
  * @author elhafyani
- *        
+ *      
  */
 class WelcomeController extends BaseController
 {
@@ -26,8 +26,7 @@ class WelcomeController extends BaseController
     }
 
     public function index()
-    {
-        $this->logger->debug("hello world");
+    {        
         $data = $this->repository->get_sample_record();
         $this->view($data);
     }

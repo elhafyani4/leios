@@ -6,6 +6,20 @@
             "email": "elhafyani4@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "system\\": "src/system",
+            "application\\": "src/application",
+            "application\\configuration\\": "src/application/configuration"
+        }
+    },
     "require": {
+        "psr/log": "^1.1",
+        "psr/http-server-middleware": "^1.0",
+        "psr/container": "^1.0"
+        
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1"
     }
 }

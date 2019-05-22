@@ -2,10 +2,21 @@
 
 namespace system\middlewares;
 
-class RequestHandler implements MiddlewareInterface {
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use system\Response;
 
-    public function handle($requestContext){
+class RequestHandler extends BaseMiddleware {
+
+    public function handle(ServerRequestInterface $requestContext) : ResponseInterface
+    {
+
+        $this->invokeNext($requestContext);
+       
+        ob_start();
         $request_uri = $_SERVER["REQUEST_URI"];
+        $route = null;
         if($requestContext->routing->resolveRoute($request_uri, $route) === false){
             $className = "system\controller\NotFoundController";
             $methodName = "index";
@@ -14,8 +25,9 @@ class RequestHandler implements MiddlewareInterface {
             $className = CONTROLLER_LOCATION . $route->controller . 'Controller';
             $methodName = $route->action;
         }
-
         $class = new \ReflectionClass($className);
+        $classDocumentation = $class->getDocComment();
+        // var_dump($classDocumentation);
         $parameters = $class->getConstructor()->getParameters();
 
         $injectable_objects = array();
@@ -38,13 +50,20 @@ class RequestHandler implements MiddlewareInterface {
         else {
             $object = $class->newInstanceArgs($args);
         }
-        
+      
         call_user_func_array(array(
             $object,
             $methodName
         ),  $arguments ?? $route->args);
-        $response = ob_get_flush();
-        return $response;
-    }
 
+        $responseData = ob_get_clean();
+
+        if ( !isset($requestContext->response) ) {
+            $requestContext->response = new Response();
+        }
+
+        $requestContext->response->messageBody .= $responseData;
+
+        return $requestContext->response;
+    }
 }

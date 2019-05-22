@@ -5,9 +5,11 @@ use system\routing\Routing;
 use system\container\Container;
 use system\middlewares\RequestHandler;
 use system\middlewares\SampleHandler;
+use Psr\Http\Server\MiddlewareInterface;
+use system\middlewares\Middleware;
+use system\middlewares\AuthorizeMiddleware;
 
-
-class startup
+class startup 
 {
     /**
      * Container Object that serves as dependecy registry
@@ -33,8 +35,8 @@ class startup
     /**
      * get instance
      */
-    public static function getInstance(){
-        if(self::$instance == null){
+    public static function getInstance() {
+        if (self::$instance == null) {
             self::$instance = new self();
         }
 
@@ -57,8 +59,10 @@ class startup
      * configure Middleware that is going to run
      */
     public function configure(){
-        $this->useMiddleWare(new RequestHandler());
+        $this->useMiddleWare(new AuthorizeMiddleware());
+        
         $this->useMiddleWare(new SampleHandler());
+        $this->useMiddleWare(new RequestHandler());
         return $this;
     }
 
@@ -70,9 +74,9 @@ class startup
         $this->container->registerClasses();
         $this->routing->registerRoutes();
 
-        $this->requestContext = new RequestContext();
-        $this->requestContext->container = $this->container;
-        $this->requestContext->routing = $this->routing;
+        $this->serverRequest = new ServerRequest();
+        $this->serverRequest->container = $this->container;
+        $this->serverRequest->routing = $this->routing;
 
         return $this;
     }
@@ -82,11 +86,17 @@ class startup
      */
     public function process()
     {
-       $response = "";
-       foreach($this->middleWares as $middleWare){
-           $response .= $middleWare->handle($this->requestContext);
-       }
-       echo $response;
+        
+        $middleware = new Middleware($this->middleWares, new RequestHandler());
+        $middleware->process($this->serverRequest, new RequestHandler());
+
+    //    $response = "";
+    //    foreach($this->middleWares as $middleWare){
+    //        $response .= $middleWare->handle($this->requestContext);
+    //    }
+    //    echo $response;
+
+        echo $this->serverRequest->response->messageBody;
     }
 
     public function endRequest()
