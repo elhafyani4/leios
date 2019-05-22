@@ -270,9 +270,11 @@ class SampleHandler extends BaseMiddleware
 {
     public function handle(ServerRequestInterface $requestContext): ResponseInterface
     {
-        // do some processing before request execution 
+        // Do some processing before request execution 
+        
         $response = $this->invokeNext($requestContext);
-        //do some processing after the request got handled or modify the response
+        
+        // Do some processing after the request got handled or modify the response
         
         return $response; 
     }
