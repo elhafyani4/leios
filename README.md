@@ -266,7 +266,7 @@ namespace system\middlewares;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-class SampleHandler extends BaseMiddleware
+class MiddlewareTemplate extends BaseMiddleware
 {
     public function handle(ServerRequestInterface $requestContext): ResponseInterface
     {
