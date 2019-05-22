@@ -5,17 +5,19 @@ namespace system\middlewares;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use system\Response;
 
-class RequestHandler implements RequestHandlerInterface {
+class RequestHandler extends BaseMiddleware {
 
     public function handle(ServerRequestInterface $requestContext) : ResponseInterface
     {
 
-        $requestContext->next()->handle($requestContext);
-
+        $this->invokeNext($requestContext);
+       
+        ob_start();
         $request_uri = $_SERVER["REQUEST_URI"];
-        
-        if($requestContext->routing->resolveRoute($request_uri, $route=null) === false){
+        $route = null;
+        if($requestContext->routing->resolveRoute($request_uri, $route) === false){
             $className = "system\controller\NotFoundController";
             $methodName = "index";
             $arguments = array();
@@ -23,10 +25,9 @@ class RequestHandler implements RequestHandlerInterface {
             $className = CONTROLLER_LOCATION . $route->controller . 'Controller';
             $methodName = $route->action;
         }
-
         $class = new \ReflectionClass($className);
         $classDocumentation = $class->getDocComment();
-        var_dump($classDocumentation);
+        // var_dump($classDocumentation);
         $parameters = $class->getConstructor()->getParameters();
 
         $injectable_objects = array();
@@ -49,15 +50,20 @@ class RequestHandler implements RequestHandlerInterface {
         else {
             $object = $class->newInstanceArgs($args);
         }
-        
+      
         call_user_func_array(array(
             $object,
             $methodName
         ),  $arguments ?? $route->args);
-        $responseData = ob_get_flush();
 
-         $response = \Response::withStatus(200);
-         $response->setMessageBody($responseData );
-         return $response;
+        $responseData = ob_get_clean();
+
+        if ( !isset($requestContext->response) ) {
+            $requestContext->response = new Response();
+        }
+
+        $requestContext->response->messageBody .= $responseData;
+
+        return $requestContext->response;
     }
 }

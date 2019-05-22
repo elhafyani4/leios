@@ -6,6 +6,8 @@ use system\container\Container;
 use system\middlewares\RequestHandler;
 use system\middlewares\SampleHandler;
 use Psr\Http\Server\MiddlewareInterface;
+use system\middlewares\Middleware;
+use system\middlewares\AuthorizeMiddleware;
 
 class startup 
 {
@@ -33,8 +35,8 @@ class startup
     /**
      * get instance
      */
-    public static function getInstance(){
-        if(self::$instance == null){
+    public static function getInstance() {
+        if (self::$instance == null) {
             self::$instance = new self();
         }
 
@@ -57,8 +59,10 @@ class startup
      * configure Middleware that is going to run
      */
     public function configure(){
-        $this->useMiddleWare(new RequestHandler());
+        $this->useMiddleWare(new AuthorizeMiddleware());
+        
         $this->useMiddleWare(new SampleHandler());
+        $this->useMiddleWare(new RequestHandler());
         return $this;
     }
 
@@ -83,14 +87,16 @@ class startup
     public function process()
     {
         
-        $middleware = new system\middleware\Middleware($this->middleWares, new RequestHandler());
-        $middleware->process();
+        $middleware = new Middleware($this->middleWares, new RequestHandler());
+        $middleware->process($this->serverRequest, new RequestHandler());
 
     //    $response = "";
     //    foreach($this->middleWares as $middleWare){
     //        $response .= $middleWare->handle($this->requestContext);
     //    }
     //    echo $response;
+
+        echo $this->serverRequest->response->messageBody;
     }
 
     public function endRequest()

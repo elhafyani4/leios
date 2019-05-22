@@ -15,7 +15,7 @@ class container implements ContainerInterface
 
     public function registerClasses()
     {
-        config::register_classes($this);
+        \application\configuration\config::register_classes($this);
     }
 
     public function add($clazz, $instance)

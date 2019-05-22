@@ -3,21 +3,24 @@
 namespace system;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\StreamInterface;
 
-class ServerRequest implements ServerRequestInterface {
-    
-    private $container;
-    private $routing;
-    private $post;
-    private $get;
+class ServerRequest implements ServerRequestInterface
+{
 
-    private $header;
-    private $response;
-    private $next;
-    private $listOfMiddlewares;
+    public $container;
+    public $routing;
+    public $post;
+    public $get;
+
+    public $header;
+    public $response;
+    public $next;
+    public $listOfMiddlewares;
 
 
-    
+
 
     /**
      * Retrieve cookies.
@@ -29,7 +32,8 @@ class ServerRequest implements ServerRequestInterface {
      *
      * @return array
      */
-    public function getCookieParams(){}
+    public function getCookieParams()
+    { }
 
     /**
      * Return an instance with the specified cookies.
@@ -48,10 +52,8 @@ class ServerRequest implements ServerRequestInterface {
      * @param array $cookies Array of key/value pairs representing cookies.
      * @return static
      */
-    public function withCookieParams(array $cookies){
-
-
-    }
+    public function withCookieParams(array $cookies)
+    { }
 
     /**
      * Retrieve query string arguments.
@@ -65,7 +67,8 @@ class ServerRequest implements ServerRequestInterface {
      *
      * @return array
      */
-    public function getQueryParams(){}
+    public function getQueryParams()
+    { }
 
     /**
      * Return an instance with the specified query string arguments.
@@ -89,7 +92,8 @@ class ServerRequest implements ServerRequestInterface {
      *     $_GET.
      * @return static
      */
-    public function withQueryParams(array $query){}
+    public function withQueryParams(array $query)
+    { }
 
     /**
      * Retrieve normalized file upload data.
@@ -103,9 +107,10 @@ class ServerRequest implements ServerRequestInterface {
      * @return array An array tree of UploadedFileInterface instances{} an empty
      *     array MUST be returned if no data is present.
      */
-    public function getUploadedFiles(){
+    public function getUploadedFiles()
+    {
 
-       echo "ghello";
+        echo "ghello";
     }
 
     /**
@@ -119,7 +124,8 @@ class ServerRequest implements ServerRequestInterface {
      * @return static
      * @throws \InvalidArgumentException if an invalid structure is provided.
      */
-    public function withUploadedFiles(array $uploadedFiles){}
+    public function withUploadedFiles(array $uploadedFiles)
+    { }
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -136,7 +142,8 @@ class ServerRequest implements ServerRequestInterface {
      * @return null|array|object The deserialized body parameters, if any.
      *     These will typically be an array or object.
      */
-    public function getParsedBody(){}
+    public function getParsedBody()
+    { }
 
     /**
      * Return an instance with the specified body parameters.
@@ -166,7 +173,8 @@ class ServerRequest implements ServerRequestInterface {
      * @throws \InvalidArgumentException if an unsupported argument type is
      *     provided.
      */
-    public function withParsedBody($data){}
+    public function withParsedBody($data)
+    { }
 
     /**
      * Retrieve attributes derived from the request.
@@ -179,7 +187,8 @@ class ServerRequest implements ServerRequestInterface {
      *
      * @return array Attributes derived from the request.
      */
-    public function getAttributes(){}
+    public function getAttributes()
+    { }
 
     /**
      * Retrieve a single derived request attribute.
@@ -196,7 +205,8 @@ class ServerRequest implements ServerRequestInterface {
      * @param mixed $default Default value to return if the attribute does not exist.
      * @return mixed
      */
-    public function getAttribute($name, $default = null){}
+    public function getAttribute($name, $default = null)
+    { }
 
     /**
      * Return an instance with the specified derived request attribute.
@@ -213,7 +223,8 @@ class ServerRequest implements ServerRequestInterface {
      * @param mixed $value The value of the attribute.
      * @return static
      */
-    public function withAttribute($name, $value){}
+    public function withAttribute($name, $value)
+    { }
 
     /**
      * Return an instance that removes the specified derived request attribute.
@@ -229,16 +240,68 @@ class ServerRequest implements ServerRequestInterface {
      * @param string $name The attribute name.
      * @return static
      */
-    public function withoutAttribute($name){}
+    public function withoutAttribute($name)
+    { }
 
 
-    public function next(){
-        for($i = 0; i < count($this->listOfMiddlewares); $i++) {
-            yield $this->listOfMiddlewares[$i];
-        }
-        yield noop();
+    public function getRequestTarget()
+    { }
+    public function withRequestTarget($requestTarget)
+    { }
+    public function getMethod()
+    { }
+    public function withMethod($method)
+    { }
+    public function getUri()
+    { }
+    public function withUri(UriInterface $uri, $preserveHost = false)
+    { }
+
+    public function getHeader($name)
+    { }
+
+    public function getHeaderLine($name)
+    { }
+
+    public function withHeader($name, $value)
+    { }
+
+    public function withAddedHeader($name, $value)
+    { }
+
+    public function withoutHeader($name)
+    { }
+
+    public function getBody()
+    { }
+
+    public function withBody(StreamInterface $body)
+    { }
+
+    public function getServerParams()
+    { }
+
+    public function getProtocolVersion()
+    { }
+
+    public function withProtocolVersion($version)
+    { }
+    public function getHeaders()
+    { }
+    public function hasHeader($name)
+    { }
+
+
+    public $middlewareGenerator ;
+    public function setGenerator(){
+        $this->middlewareGenerator = $this->middleware_generator();
     }
 
-    
+    public function middleware_generator()
+    {
+        for ($i = 0; $i < count($this->listOfMiddlewares); $i++) {
+            yield $this->listOfMiddlewares[$i];
+        }
+        yield null;
+    }
 }
-

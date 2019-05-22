@@ -9,7 +9,8 @@
     "autoload": {
         "psr-4": {
             "system\\": "src/system",
-            "application\\": "application"
+            "application\\": "src/application",
+            "application\\configuration\\": "src/application/configuration"
         }
     },
     "require": {

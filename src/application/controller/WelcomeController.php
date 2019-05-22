@@ -9,8 +9,7 @@ use Psr\Log\LoggerInterface;
 /**
  *
  * @author elhafyani
- * 
- * @authorize       
+ *      
  */
 class WelcomeController extends BaseController
 {

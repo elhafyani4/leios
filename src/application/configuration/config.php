@@ -17,13 +17,12 @@ class config
     static $routes = array(
         "/" => "Welcome/index",
         "\/help" => "Welcome/help"
-        // "\/help\/(.*)\/(.*)" => "Welcome/getHelp"
     );
 
     
     public static function register_classes(&$container)
     {
         $container->add(ISampleService::class, new SampleService());
-        $container->add(LoggerInterface::class, new FileLogger(__DIR__."\..\..\logging\logger.log"));
+        $container->add(LoggerInterface::class, new FileLogger(__DIR__."\..\..\..\logging\logger.log"));
     }
 }
