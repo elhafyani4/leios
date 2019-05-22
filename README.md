@@ -256,3 +256,26 @@ In order to attach this middleware to the pipeline we need to configure  this in
     }
     
 ```
+
+in order to write a middleware , you have to follow this structure 
+```php
+<?php
+
+namespace system\middlewares;
+
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+
+class SampleHandler extends BaseMiddleware
+{
+    public function handle(ServerRequestInterface $requestContext): ResponseInterface
+    {
+        // do some processing before request execution 
+        $response = $this->invokeNext($requestContext);
+        //do some processing after the request got handled or modify the response
+        
+        return $response; 
+    }
+}
+```
+
