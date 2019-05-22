@@ -24,4 +24,6 @@ Routing
 
 Dependency Injection
 
+Middleware
+
 that's all you need to start writing your application
