@@ -140,7 +140,7 @@ use Psr\Log\LoggerInterface;
 
 class SampleController extends BaseController{
 
-    private  $service;
+    private $service;
 
     private $logger;
 
