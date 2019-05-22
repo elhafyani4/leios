@@ -5,7 +5,6 @@ use system\routing\Routing;
 use system\container\Container;
 use system\middlewares\RequestHandler;
 use system\middlewares\SampleHandler;
-use Psr\Http\Server\MiddlewareInterface;
 use system\middlewares\Middleware;
 use system\middlewares\AuthorizeMiddleware;
 
@@ -88,15 +87,9 @@ class startup
     {
         
         $middleware = new Middleware($this->middleWares, new RequestHandler());
-        $middleware->process($this->serverRequest, new RequestHandler());
+        $response = $middleware->process($this->serverRequest, new RequestHandler());
 
-    //    $response = "";
-    //    foreach($this->middleWares as $middleWare){
-    //        $response .= $middleWare->handle($this->requestContext);
-    //    }
-    //    echo $response;
-
-        echo $this->serverRequest->response->messageBody;
+        echo $response->messageBody;
     }
 
     public function endRequest()

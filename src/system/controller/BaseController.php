@@ -4,17 +4,18 @@ namespace system\controller;
 abstract class BaseController
 {
 
-    public $controllerName = "";
-
     public function __construct($object = null)
     {
         if($object != null){
-            $this->controllerName = self::get_controller_name(get_class($object));
+            
         }
     }
 
-    protected function view($viewName = null, $data = null)
+    protected function view($viewName = null, $data = array())
     {
+
+        $controllerName = self::get_controller_name(get_class($this));
+
         $numargs = func_num_args();
         if ($numargs == 1) {
             $argument = func_get_arg(0);
@@ -26,7 +27,7 @@ abstract class BaseController
                 $viewName = null;
                 $data = $argument;
             }
-        } else {
+        } else if($numargs > 1) {
             $viewName = func_get_arg(0);
             $data = func_get_arg(1);
         }
@@ -38,12 +39,13 @@ abstract class BaseController
         if ($data != null) {
             if (is_array($data)) {
                 extract($data);
-            } else {
-                throw new \Exception('Data is not compatible to extract, only array is accepted.');
-            }
+            } 
+            // else {
+            //     throw new \Exception('Data is not compatible to extract, only array is accepted.');
+            // }
         }
 
-        include_once VIEW_PATH . '/' . $this->controllerName . '/' . $viewName . '.php';
+        include_once VIEW_PATH . '/' . $controllerName . '/' . $viewName . '.php';
     }
 
     protected static function get_controller_name($className)

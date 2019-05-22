@@ -16,7 +16,8 @@ class config
      */
     static $routes = array(
         "/" => "Welcome/index",
-        "\/help" => "Welcome/help"
+        "\/help" => "Welcome/help",
+        "\/sample" => "Sample/index"
     );
 
     

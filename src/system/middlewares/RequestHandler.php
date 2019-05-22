@@ -9,7 +9,7 @@ use system\Response;
 
 class RequestHandler extends BaseMiddleware {
 
-    public function handle(ServerRequestInterface $requestContext) : ResponseInterface
+public function handle(ServerRequestInterface $requestContext) : ResponseInterface
     {
 
         $this->invokeNext($requestContext);
@@ -26,8 +26,7 @@ class RequestHandler extends BaseMiddleware {
             $methodName = $route->action;
         }
         $class = new \ReflectionClass($className);
-        $classDocumentation = $class->getDocComment();
-        // var_dump($classDocumentation);
+       
         $parameters = $class->getConstructor()->getParameters();
 
         $injectable_objects = array();
@@ -58,12 +57,11 @@ class RequestHandler extends BaseMiddleware {
 
         $responseData = ob_get_clean();
 
-        if ( !isset($requestContext->response) ) {
-            $requestContext->response = new Response();
-        }
+       $response = new Response();
+       $response->messageBody = $responseData;
 
-        $requestContext->response->messageBody .= $responseData;
+        
 
-        return $requestContext->response;
+        return $response;
     }
 }

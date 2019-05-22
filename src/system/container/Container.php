@@ -1,7 +1,6 @@
 <?php
 namespace system\container;
 
-use application\configuration\config;
 
 class container implements ContainerInterface
 {

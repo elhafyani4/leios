@@ -28,10 +28,6 @@ class Middleware implements MiddlewareInterface
         $request->listOfMiddlewares = $this->listOfMiddlewares;
         $request->setGenerator();
 
-        $request->middlewareGenerator->current()->handle($request);
-    
-        
-        
-        return $request->response;
+        return $request->middlewareGenerator->current()->handle($request);
     }
 }

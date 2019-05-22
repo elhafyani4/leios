@@ -9,7 +9,8 @@ use Psr\Log\LoggerInterface;
 /**
  *
  * @author elhafyani
- *      
+ *    
+ *   
  */
 class WelcomeController extends BaseController
 {
@@ -22,7 +23,6 @@ class WelcomeController extends BaseController
     {
         $this->repository = $couponrepository;
         $this->logger = $logger;
-        parent::__construct($this);
     }
 
     public function index()
@@ -33,6 +33,11 @@ class WelcomeController extends BaseController
 
     public function help()
     {
+        $data = array("name" => "Leios");
+        $this->view($data);
+    }
+
+    public function about(){
         $this->view();
     }
 }

@@ -15,7 +15,6 @@ class ServerRequest implements ServerRequestInterface
     public $get;
 
     public $header;
-    public $response;
     public $next;
     public $listOfMiddlewares;
 

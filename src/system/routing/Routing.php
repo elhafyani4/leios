@@ -41,6 +41,15 @@ class Routing
         }
 
         if(count($result_keys) == 0){
+            $url_parts = explode("/", $route);
+            if(count($url_parts) >= 2){
+                $route = new Route();
+                $route->controller = $url_parts[1];
+                $route->action = $url_parts[2];
+                $route_result = $route;
+                return true;
+            }
+
             return false;
         }
 

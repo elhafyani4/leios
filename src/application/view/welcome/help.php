@@ -9,7 +9,7 @@
     <div class="container">
         <div class="card">
             <div class="card-header">
-                Help
+               <?php echo $name ?> Help
             </div>
             <div class="card-body">
                 <h5 class="card-title">Special title treatment</h5>
