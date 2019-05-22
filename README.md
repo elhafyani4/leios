@@ -242,3 +242,17 @@ class SampleHandler extends BaseMiddleware
     }
 }
 ```
+
+In order to attach this middleware to the pipeline we need to configure  this in the Startup.php
+``` php
+    .
+    .
+    .
+    public function configure(){
+        $this->useMiddleWare(new AuthorizeMiddleware());
+        $this->useMiddleWare(new SampleHandler());
+        $this->useMiddleWare(new RequestHandler());
+        return $this;
+    }
+    
+```
