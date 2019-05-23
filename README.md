@@ -5,7 +5,7 @@ Leios is a simple micro mvc framework, built for lightweight application.
 
 To try the framework :
 ```
-git checkout https://github.com/elhafyani4/Leios.git
+git checkout https://github.com/elhafyani4/Leios.git && composer require 
 ```
 to run it 
 ```
